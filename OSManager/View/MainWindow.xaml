@@ -1,0 +1,52 @@
+﻿<Window
+    x:Class="OSManager.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:autorun="clr-namespace:OSManager.AutorunView"
+    xmlns:cleaner="clr-namespace:OSManager.CleanerView"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OSManager"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="OSManager"
+    Width="1000"
+    Height="600"
+    ResizeMode="NoResize"
+    Style="{StaticResource CustomWindowStyle}"
+    TextOptions.TextFormattingMode="Display"
+    TextOptions.TextRenderingMode="ClearType"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl Style="{StaticResource MainMenu}">
+            <TabItem
+                Header="Главная"
+                Style="{StaticResource MainMenuItem}"
+                Tag="&#xE80F;">
+                <local:MainControl />
+            </TabItem>
+            <TabItem
+                Header="Автозагрузка"
+                Style="{StaticResource MainMenuItem}"
+                Tag="&#xE9F3;">
+                <autorun:AutorunControl />
+            </TabItem>
+            <TabItem
+                Header="Очистка"
+                Style="{StaticResource MainMenuItem}"
+                Tag="&#xEA99;">
+                <cleaner:CleanerControl />
+            </TabItem>
+            <TabItem
+                Header="Удаление"
+                Style="{StaticResource MainMenuItem}"
+                Tag="&#xE74D;" />
+            <TabItem
+                Header="Настройки"
+                Style="{StaticResource MainMenuItem}"
+                Tag="&#xE90F;">
+                <local:SettingsControl />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

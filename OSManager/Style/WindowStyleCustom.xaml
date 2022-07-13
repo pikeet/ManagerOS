@@ -1,0 +1,67 @@
+﻿<ResourceDictionary
+    x:Class="OSManager.Style.WindowStyle.WindowStyleCustom"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:OSManager">
+
+    <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    CaptionHeight="30"
+                    CornerRadius="0"
+                    GlassFrameThickness="5"
+                    ResizeBorderThickness="0" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#F4F5F7" />
+        <Setter Property="Background" Value="#F4F5F7" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid>
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0,30,0,0">
+                            <AdornerDecorator>
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                        </Border>
+
+                        <Grid Height="30" VerticalAlignment="Top">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border
+                                Grid.Column="0"
+                                Width="220"
+                                Background="#333333" />
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+
+                                <Button
+                                    x:Name="btnMinimize"
+                                    Click="MinimizeApplication"
+                                    Style="{StaticResource ButtonMinimize}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnClose"
+                                    Click="CloseApplication"
+                                    Style="{StaticResource ButtonExit}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

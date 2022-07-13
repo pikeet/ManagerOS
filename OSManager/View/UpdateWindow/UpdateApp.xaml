@@ -1,0 +1,52 @@
+﻿<Window
+    x:Class="OSManager.UpdateApp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OSManager.View.UpdateWindow"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="UpdateApp"
+    Width="440"
+    Height="330"
+    Background="#F4F5F7"
+    Left="{Binding Path=left}"
+    ResizeMode="NoResize"
+    Top="{Binding Path=top}"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Window.DataContext>
+        <local:UpdateAppViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Grid.Column="0"
+                Margin="10"
+                Orientation="Horizontal">
+                <Viewbox>
+                    <TextBlock
+                        FontFamily="{StaticResource MDL2}"
+                        FontSize="20"
+                        Foreground="#77A9FA"
+                        SnapsToDevicePixels="True"
+                        Text="&#xE753;" />
+                </Viewbox>
+                <TextBlock
+                    Margin="10,0,0,0"
+                    FontSize="14"
+                    Foreground="#77A9FA"
+                    Text="Обновление OSManager" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

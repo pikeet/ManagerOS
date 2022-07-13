@@ -1,0 +1,530 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:OSManager">
+
+    <!--  MainMenu  -->
+    <Style x:Key="MainMenuItem" TargetType="{x:Type TabItem}">
+        <Setter Property="Background" Value="#333333" />
+        <Setter Property="Foreground" Value="#D1D1D1" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+
+                    <Border
+                        x:Name="PART_Border"
+                        Height="40"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border
+                                x:Name="Line"
+                                Width="2"
+                                Height="40"
+                                HorizontalAlignment="Left"
+                                Background="{TemplateBinding Background}" />
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                                <Viewbox
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    StretchDirection="DownOnly">
+                                    <TextBlock
+                                        x:Name="Icon"
+                                        Margin="20,0"
+                                        FontSize="16"
+                                        FontFamily="{StaticResource MDL2}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        Text="{TemplateBinding Tag}" />
+                                </Viewbox>
+                                <Viewbox
+                                    Grid.Column="3"
+                                    VerticalAlignment="Center"
+                                    StretchDirection="DownOnly">
+                                    <ContentPresenter VerticalAlignment="Center" ContentSource="Header" />
+                                </Viewbox>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="unselected">
+
+                            <ColorAnimation
+                                Storyboard.TargetName="Line"
+                                Storyboard.TargetProperty="Background.Color"
+                                To="#77A9FA"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                            <ColorAnimation
+                                Storyboard.TargetName="PART_Border"
+                                Storyboard.TargetProperty="Background.Color"
+                                To="#3E3E3E"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Foreground.Color"
+                                To="#77A9FA"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                        </Storyboard>
+                        <Storyboard x:Key="selected">
+
+                            <ColorAnimation
+                                Storyboard.TargetName="Line"
+                                Storyboard.TargetProperty="Background.Color"
+                                To="#333333"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Foreground.Color"
+                                To="#D1D1D1"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Trigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="uunselected" />
+                                <BeginStoryboard x:Name="sselected" Storyboard="{StaticResource selected}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="False">
+                            <Trigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="sselected" />
+                                <BeginStoryboard x:Name="uunselected" Storyboard="{StaticResource unselected}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="MainMenu" TargetType="{x:Type TabControl}">
+        <Setter Property="TabStripPlacement" Value="Left" />
+        <Setter Property="Background" Value="#F4F5F7" />
+        <Setter Property="Template">
+            <Setter.Value>
+                
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid ClipToBounds="True" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Name="ColumnDefinition0" Width="220" />
+                            <ColumnDefinition Name="ColumnDefinition1" Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Name="RowDefinition0" Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="HeaderBorder" Background="#333333">
+                            <TextBlock
+                                Margin="30,0,0,0"
+                                FontFamily="Segoe UI Light"
+                                FontSize="24"
+                                Foreground="#D1D1D1"
+                                Text="OSManager"
+                                TextOptions.TextHintingMode="Fixed"
+                                TextOptions.TextRenderingMode="Auto"
+                                TextOptions.TextFormattingMode="Ideal"/>
+                            <TabPanel
+                                Name="HeaderPanel"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,50"
+                                Panel.ZIndex="1"
+                                IsItemsHost="True"
+                                KeyboardNavigation.TabIndex="1" />
+                        </Grid>
+
+                        <Grid
+                            Name="ContentPanel"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            KeyboardNavigation.DirectionalNavigation="Contained"
+                            KeyboardNavigation.TabIndex="2"
+                            KeyboardNavigation.TabNavigation="Local">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter
+                                    Name="PART_SelectedContentHost"
+                                    Margin="2"
+                                    Content="{TemplateBinding SelectedContent}"
+                                    ContentSource="SelectedContent"
+                                    ContentStringFormat="{TemplateBinding SelectedContentStringFormat}"
+                                    ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+                                    SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+                
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <!--  SettingsMenu  -->
+    <Style x:Key="SettingsMenuItem" TargetType="{x:Type TabItem}">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Foreground" Value="#333333" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Segoe UI Semibold" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+
+                    <Border
+                        x:Name="PART_Border"
+                        Height="60"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border
+                                x:Name="Line"
+                                Width="2"
+                                Height="60"
+                                HorizontalAlignment="Left"
+                                Background="{TemplateBinding Background}" />
+                            <Grid VerticalAlignment="Center">
+                                <StackPanel Margin="20,0,0,0" Orientation="Vertical">
+                                    <ContentPresenter ContentSource="Header" />
+                                    <TextBlock
+                                        x:Name="Tip"
+                                        FontFamily="Segoe UI"
+                                        FontSize="11"
+                                        Foreground="Gray"
+                                        Text="{TemplateBinding Tag}"
+                                        TextOptions.TextFormattingMode="Display"
+                                        TextOptions.TextRenderingMode="Grayscale" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="Fade">
+                            <ColorAnimation
+                                Storyboard.TargetName="Line"
+                                Storyboard.TargetProperty="(Border.Background).Color"
+                                To="#77A9FA"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                            <ColorAnimation
+                                Storyboard.TargetName="Tip"
+                                Storyboard.TargetProperty="(TextBlock.Foreground).Color"
+                                To="#77A9FA"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Foreground.Color"
+                                To="#77A9FA"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                        </Storyboard>
+                        <Storyboard x:Key="Out">
+                            <ColorAnimation
+                                Storyboard.TargetName="Line"
+                                Storyboard.TargetProperty="(Border.Background).Color"
+                                To="White"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                            <ColorAnimation
+                                Storyboard.TargetName="Tip"
+                                Storyboard.TargetProperty="(TextBlock.Foreground).Color"
+                                From="#77A9FA"
+                                To="Gray"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Foreground.Color"
+                                To="#333333"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Trigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="oOut" />
+                                <BeginStoryboard x:Name="fFade" Storyboard="{StaticResource Out}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Trigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="fFade" />
+                                <BeginStoryboard x:Name="oOut" Storyboard="{StaticResource Fade}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SettingsMenu" TargetType="{x:Type TabControl}">
+        <Setter Property="TabStripPlacement" Value="Left" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid
+                        ClipToBounds="True"
+                        KeyboardNavigation.TabNavigation="Local"
+                        SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Name="ColumnDefinition0" Width="250" />
+                            <ColumnDefinition Name="ColumnDefinition1" Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Name="RowDefinition0" Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Border
+                            x:Name="HeaderBorder"
+                            Margin="0,0,5,0"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                            <TabPanel
+                                Name="HeaderPanel"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,20"
+                                Panel.ZIndex="1"
+                                IsItemsHost="True"
+                                KeyboardNavigation.TabIndex="1" />
+                        </Border>
+
+                        <Grid
+                            Name="ContentPanel"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            KeyboardNavigation.DirectionalNavigation="Contained"
+                            KeyboardNavigation.TabIndex="2"
+                            KeyboardNavigation.TabNavigation="Local">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter
+                                    Name="PART_SelectedContentHost"
+                                    Margin="2"
+                                    Content="{TemplateBinding SelectedContent}"
+                                    ContentSource="SelectedContent"
+                                    ContentStringFormat="{TemplateBinding SelectedContentStringFormat}"
+                                    ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+                                    SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--  DiskCleaner  -->
+    <Style x:Key="DiskCleanerItem" TargetType="{x:Type TabItem}">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="0,0,5,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid Margin="{TemplateBinding Margin}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="2" />
+                        </Grid.RowDefinitions>
+                        <Border
+                            x:Name="Line"
+                            Grid.Row="1"
+                            Height="2"
+                            VerticalAlignment="Bottom"
+                            Background="{TemplateBinding Background}" />
+                        <ContentPresenter
+                            Grid.Row="0"
+                            Margin="5,0,5,3"
+                            VerticalAlignment="Center"
+                            ContentSource="Header" />
+                    </Grid>
+
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="unselected">
+
+                            <ColorAnimation
+                                Storyboard.TargetName="Line"
+                                Storyboard.TargetProperty="Background.Color"
+                                To="#77A9FA"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Foreground.Color"
+                                To="#77A9FA"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                        </Storyboard>
+                        <Storyboard x:Key="selected">
+
+                            <ColorAnimation
+                                Storyboard.TargetName="Line"
+                                Storyboard.TargetProperty="Background.Color"
+                                To="White"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Foreground.Color"
+                                To="Black"
+                                Duration="0:0:0.4">
+                                <ColorAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut" />
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Trigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="uunselected" />
+                                <BeginStoryboard x:Name="sselected" Storyboard="{StaticResource selected}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="False">
+                            <Trigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="sselected" />
+                                <BeginStoryboard x:Name="uunselected" Storyboard="{StaticResource unselected}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DiskCleaner" TargetType="{x:Type TabControl}">
+        <Setter Property="TabStripPlacement" Value="Top" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid
+                        ClipToBounds="True"
+                        KeyboardNavigation.TabNavigation="Local"
+                        SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Name="RowDefinition0" Height="auto" />
+                            <RowDefinition x:Name="RowDefinition1" Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="HeaderBorder">
+                            <TabPanel
+                                Name="HeaderPanel"
+                                Grid.Row="0"
+                                Margin="0,0"
+                                Panel.ZIndex="1"
+                                IsItemsHost="True"
+                                KeyboardNavigation.TabIndex="1" />
+                        </Grid>
+
+                        <Grid
+                            Name="ContentPanel"
+                            Grid.Row="1"
+                            KeyboardNavigation.DirectionalNavigation="Contained"
+                            KeyboardNavigation.TabIndex="2"
+                            KeyboardNavigation.TabNavigation="Local">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter
+                                    Name="PART_SelectedContentHost"
+                                    Margin="2"
+                                    Content="{TemplateBinding SelectedContent}"
+                                    ContentSource="SelectedContent"
+                                    ContentStringFormat="{TemplateBinding SelectedContentStringFormat}"
+                                    ContentTemplate="{TemplateBinding SelectedContentTemplate}"
+                                    SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
